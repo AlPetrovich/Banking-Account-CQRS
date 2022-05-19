@@ -30,17 +30,16 @@ public class OpenAccountController {
     public ResponseEntity<BaseResponse> openAccount(@RequestBody OpenAccountCommand openAccountCommand) {
         var id = UUID.randomUUID().toString(); //genere un id aleatorio
         openAccountCommand.setId(id);
-        try{
+        try {
             commandDispatcher.send(openAccountCommand);
-            return new ResponseEntity<>(new OpenAccountResponse("Cuenta bancaria creada con exito", id), HttpStatus.CREATED);
-
+            return new ResponseEntity<>(new OpenAccountResponse("La cuenta del banco se ha creado exitosamente", id), HttpStatus.CREATED);
         }catch(IllegalStateException e){
-            logger.log(Level.WARNING, "Error al crear la cuenta bancaria", e.toString());
+            logger.log(Level.WARNING, MessageFormat.format("No se pudo generar la cuenta de banco - {0}", e.toString()));
             return new ResponseEntity<>(new BaseResponse(e.toString()), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            var errorMessage = MessageFormat.format("Error durante proceso de request {0}", id);
-            logger.log(Level.SEVERE, errorMessage, e.toString());
-            return new ResponseEntity<>(new OpenAccountResponse(errorMessage, id), HttpStatus.INTERNAL_SERVER_ERROR);
+            var safeErrorMessage = MessageFormat.format("Errores mientras procesaba el request - {0}", id);
+            logger.log(Level.SEVERE, safeErrorMessage, e);
+            return new ResponseEntity<>(new OpenAccountResponse(safeErrorMessage, id), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

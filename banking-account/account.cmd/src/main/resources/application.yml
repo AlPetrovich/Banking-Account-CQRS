@@ -1,12 +1,15 @@
 server:
   port: 5000
-#Acceso a la base de datos Mongo DB(event store) y config kafka(middleware)
+
 spring:
   data:
     mongodb:
       host: localhost
       port: 27017
       database: bankingAccount
+      username: vaxidrez
+      password: "VaxiDrez2005$"
+      authentication-database: admin
   kafka:
     producer:
       bootstrap-servers: localhost:9092

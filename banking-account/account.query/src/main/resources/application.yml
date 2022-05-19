@@ -1,7 +1,6 @@
 server:
   port: 5001
 
-#Comunicacion a BD y forma de comunicacion
 spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -9,9 +8,9 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost:3307/bankingAccount?createDatabaseIfNotExist=true
-    username: root
-    password: VaxiDrez2005$$
+    url: jdbc:mysql://localhost:3306/bankingAccount?createDatabaseIfNotExist=true
+    username: "root"
+    password: "VaxiDrez2005$"
   kafka:
     listener:
       ack-mode: MANUAL_IMMEDIATE
